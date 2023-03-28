@@ -3,8 +3,9 @@ import Config
 # Configure your database
 config :livraria, Livraria.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "postgrespw",
   hostname: "localhost",
+  port: 55000,
   database: "livraria_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
