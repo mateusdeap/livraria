@@ -28,7 +28,10 @@ defmodule Livraria.CatalogFixtures do
         cost_price: "120.5",
         description: "some description",
         sell_price: "120.5",
-        title: "some title"
+        title: "some title",
+        image: "/some/path",
+        supplier_id: supplier_fixture(%{name: "some name"}).id,
+        quantity: 1
       })
       |> Livraria.Catalog.create_product()
 

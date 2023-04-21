@@ -7,8 +7,9 @@ import Config
 # Run `mix help test` for more information.
 config :livraria, Livraria.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "postgrespw",
   hostname: "localhost",
+  port: 55000,
   database: "livraria_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
