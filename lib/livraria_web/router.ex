@@ -19,6 +19,7 @@ defmodule LivrariaWeb.Router do
 
     get "/", PageController, :index
     resources "/suppliers", SupplierController
+    resources "/products", ProductController
   end
 
   # Other scopes may use custom stacks.
