@@ -3,8 +3,6 @@ defmodule LivrariaWeb.ProductControllerTest do
 
   import Livraria.CatalogFixtures
 
-  @create_attrs %{cost_price: "120.5", description: "some description", sell_price: "120.5", title: "some title"}
-  @update_attrs %{cost_price: "456.7", description: "some updated description", sell_price: "456.7", title: "some updated title"}
   @invalid_attrs %{cost_price: nil, description: nil, sell_price: nil, title: nil}
 
   describe "index" do
@@ -23,7 +21,8 @@ defmodule LivrariaWeb.ProductControllerTest do
 
   describe "create product" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.product_path(conn, :create), product: @create_attrs)
+      create_attrs = %{cost_price: "120.5", description: "some description", sell_price: "120.5", title: "some title", quantity: 1, supplier_id: supplier_fixture(%{name: "some name"}).id, image: "/some/path"}
+      conn = post(conn, Routes.product_path(conn, :create), product: create_attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.product_path(conn, :show, id)
@@ -51,7 +50,8 @@ defmodule LivrariaWeb.ProductControllerTest do
     setup [:create_product]
 
     test "redirects when data is valid", %{conn: conn, product: product} do
-      conn = put(conn, Routes.product_path(conn, :update, product), product: @update_attrs)
+      update_attrs = %{cost_price: "456.7", description: "some updated description", sell_price: "456.7", title: "some updated title", quantity: 2, supplier_id: supplier_fixture(%{name: "some other name"}).id, image: "/some/other_path"}
+      conn = put(conn, Routes.product_path(conn, :update, product), product: update_attrs)
       assert redirected_to(conn) == Routes.product_path(conn, :show, product)
 
       conn = get(conn, Routes.product_path(conn, :show, product))
