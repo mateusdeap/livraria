@@ -13,9 +13,12 @@ config :livraria,
 # Configures the endpoint
 config :livraria, LivrariaWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: LivrariaWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    formats: [html: LivrariaWeb.ErrorHTML, json: LivrariaWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: Livraria.PubSub,
-  live_view: [signing_salt: "ETC50b33"]
+  live_view: [signing_salt: "ZFO5KW1K"]
 
 # Configures the mailer
 #
@@ -26,17 +29,26 @@ config :livraria, LivrariaWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :livraria, Livraria.Mailer, adapter: Swoosh.Adapters.Local
 
-# Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
-
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.29",
+  version: "0.17.11",
   default: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.2.7",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger

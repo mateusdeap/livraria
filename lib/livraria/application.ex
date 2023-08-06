@@ -8,12 +8,14 @@ defmodule Livraria.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Livraria.Repo,
       # Start the Telemetry supervisor
       LivrariaWeb.Telemetry,
+      # Start the Ecto repository
+      Livraria.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Livraria.PubSub},
+      # Start Finch
+      {Finch, name: Livraria.Finch},
       # Start the Endpoint (http/https)
       LivrariaWeb.Endpoint
       # Start a worker by calling: Livraria.Worker.start_link(arg)

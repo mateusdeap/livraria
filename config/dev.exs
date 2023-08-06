@@ -3,9 +3,9 @@ import Config
 # Configure your database
 config :livraria, Livraria.Repo,
   username: "postgres",
-  password: "postgrespw",
+  password: "postgres",
   hostname: "localhost",
-  port: 55000,
+  port: 5432,
   database: "livraria_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
@@ -24,10 +24,10 @@ config :livraria, LivrariaWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "B9DTtiDbmVNmmDpICKnjE0kB6SSSf1FnAGYwc5yxZxoIrmIPZoiSgDp4zSYPnqTR",
+  secret_key_base: "hGgwJ8i+RlHlzvPgGTBUDudUGZsVYugYW0oM9bSmJvERoJYRzNo3c5FEj7bKM6Gl",
   watchers: [
-    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -38,7 +38,6 @@ config :livraria, LivrariaWeb.Endpoint,
 #
 #     mix phx.gen.cert
 #
-# Note that this task requires Erlang/OTP 20 or later.
 # Run `mix help phx.gen.cert` for more information.
 #
 # The `http:` config above can be replaced with:
@@ -60,10 +59,12 @@ config :livraria, LivrariaWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/livraria_web/(live|views)/.*(ex)$",
-      ~r"lib/livraria_web/templates/.*(eex)$"
+      ~r"lib/livraria_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
+
+# Enable dev routes for dashboard and mailbox
+config :livraria, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
@@ -74,3 +75,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Disable swoosh api client as it is only required for production adapters.
+config :swoosh, :api_client, false

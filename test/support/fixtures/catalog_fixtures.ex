@@ -5,20 +5,6 @@ defmodule Livraria.CatalogFixtures do
   """
 
   @doc """
-  Generate a supplier.
-  """
-  def supplier_fixture(attrs \\ %{}) do
-    {:ok, supplier} =
-      attrs
-      |> Enum.into(%{
-        name: "some name"
-      })
-      |> Livraria.Catalog.create_supplier()
-
-    supplier
-  end
-
-  @doc """
   Generate a product.
   """
   def product_fixture(attrs \\ %{}) do
@@ -28,10 +14,7 @@ defmodule Livraria.CatalogFixtures do
         cost_price: "120.5",
         description: "some description",
         sell_price: "120.5",
-        title: "some title",
-        image: "/some/path",
-        supplier_id: supplier_fixture(%{name: "some name"}).id,
-        quantity: 1
+        title: "some title"
       })
       |> Livraria.Catalog.create_product()
 

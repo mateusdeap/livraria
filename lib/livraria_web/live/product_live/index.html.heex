@@ -1,0 +1,28 @@
+<.header>
+  Listing Products
+  <:actions>
+    <.link patch={~p"/products/new"}>
+      <.button>New Product</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+  <div phx-update="stream" id="products" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+    <%= for {dom_id, product} <- @streams.products do %>
+      <LivrariaWeb.ProductLive.ProductComponent.card product={product} id={dom_id} form={@form} />
+    <% end %>
+  </div>
+</div>
+
+<.modal :if={@live_action in [:new, :edit]} id="product-modal" show on_cancel={JS.patch(~p"/products")}>
+  <.live_component
+    module={LivrariaWeb.ProductLive.FormComponent}
+    id={@product.id || :new}
+    title={@page_title}
+    action={@live_action}
+    product={@product}
+    suppliers={@suppliers}
+    patch={~p"/products"}
+  />
+</.modal>

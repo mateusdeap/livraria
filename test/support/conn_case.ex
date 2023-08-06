@@ -19,20 +19,46 @@ defmodule LivrariaWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint LivrariaWeb.Endpoint
+
+      use LivrariaWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import LivrariaWeb.ConnCase
-
-      alias LivrariaWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint LivrariaWeb.Endpoint
     end
   end
 
   setup tags do
     Livraria.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
+  end
+
+  @doc """
+  Setup helper that registers and logs in collaborators.
+
+      setup :register_and_log_in_collaborator
+
+  It stores an updated connection and a registered collaborator in the
+  test context.
+  """
+  def register_and_log_in_collaborator(%{conn: conn}) do
+    collaborator = Livraria.AdministrationFixtures.collaborator_fixture()
+    %{conn: log_in_collaborator(conn, collaborator), collaborator: collaborator}
+  end
+
+  @doc """
+  Logs the given `collaborator` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def log_in_collaborator(conn, collaborator) do
+    token = Livraria.Administration.generate_collaborator_session_token(collaborator)
+
+    conn
+    |> Phoenix.ConnTest.init_test_session(%{})
+    |> Plug.Conn.put_session(:collaborator_token, token)
   end
 end

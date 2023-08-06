@@ -6,7 +6,9 @@ defmodule Livraria.Catalog.Product do
     field :cost_price, :decimal
     field :description, :string
     field :sell_price, :decimal
-    field :title, :string
+    field :name, :string
+    field :quantity, :integer
+    field :image, :string
     field :supplier_id, :id
 
     timestamps()
@@ -15,7 +17,23 @@ defmodule Livraria.Catalog.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:title, :description, :sell_price, :cost_price, :supplier_id])
-    |> validate_required([:title, :description, :sell_price, :supplier_id])
+    |> cast(attrs, [
+      :name,
+      :description,
+      :sell_price,
+      :cost_price,
+      :quantity,
+      :image,
+      :supplier_id
+    ])
+    |> validate_required([
+      :name,
+      :description,
+      :sell_price,
+      :cost_price,
+      :quantity,
+      :image,
+      :supplier_id
+    ])
   end
 end
