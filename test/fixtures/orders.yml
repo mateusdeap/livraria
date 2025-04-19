@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total_amount: 9.99
+  payment_method: MyString
+  staff_id: one
+  completed_at: 2025-04-18 21:36:13
+
+two:
+  total_amount: 9.99
+  payment_method: MyString
+  staff_id: two
+  completed_at: 2025-04-18 21:36:13
