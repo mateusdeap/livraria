@@ -1,0 +1,21 @@
+<% if notice.present? %>
+  <div class="bg-green-50 p-3 sm:p-4 rounded-md mb-4 text-green-800 flex justify-between items-start sm:items-center" id="notice">
+    <p class="text-sm sm:text-base"><%= notice %></p>
+    <button class="text-green-800 hover:text-green-900 ml-2" onclick="this.parentElement.remove()">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+<% end %>
+
+<% if alert.present? %>
+  <div class="bg-red-50 p-3 sm:p-4 rounded-md mb-4 text-red-800 flex justify-between items-start sm:items-center" id="alert">
+    <p class="text-sm sm:text-base"><%= alert %></p>
+    <button class="text-red-800 hover:text-red-900 ml-2" onclick="this.parentElement.remove()">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+<% end %>

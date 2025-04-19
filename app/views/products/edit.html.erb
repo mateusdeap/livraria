@@ -1,0 +1,14 @@
+<div class="w-full">
+  <div class="mb-6">
+    <h1 class="text-xl sm:text-2xl font-bold">Editing Product</h1>
+  </div>
+
+  <%= turbo_frame_tag dom_id(@product) do %>
+    <%= render "form", product: @product %>
+  <% end %>
+
+  <div class="mt-4 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+    <%= link_to "Show this product", @product, class: "text-indigo-600 hover:text-indigo-900 text-sm" %>
+    <%= link_to "Back to products", products_path, class: "text-indigo-600 hover:text-indigo-900 text-sm" %>
+  </div>
+</div>

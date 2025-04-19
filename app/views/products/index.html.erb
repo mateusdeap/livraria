@@ -1,0 +1,57 @@
+<div class="w-full">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
+    <h1 class="text-xl sm:text-2xl font-bold">Products</h1>
+    <%= link_to "New product", new_product_path, class: "w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white text-center rounded-md hover:bg-indigo-700 text-sm font-medium" %>
+  </div>
+
+  <div id="products" class="w-full">
+    <!-- Mobile card view (visible on small screens) -->
+    <div class="block sm:hidden">
+      <div id="products-mobile-container" class="space-y-4">
+        <% @products.each do |product| %>
+          <%= turbo_frame_tag dom_id(product) do %>
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+              <div class="p-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-2">
+                  <%= link_to product.name, product_path(product), class: "text-indigo-600 hover:text-indigo-900" %>
+                </h3>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                  <div class="text-gray-500">Category:</div>
+                  <div><%= product.category %></div>
+                  
+                  <div class="text-gray-500">Price:</div>
+                  <div><%= number_to_currency(product.price) %></div>
+                  
+                  <div class="text-gray-500">In Stock:</div>
+                  <div><%= product.inventory_count %></div>
+                </div>
+                <div class="mt-4 flex justify-between">
+                  <%= link_to "Edit", edit_product_path(product), class: "text-indigo-600 hover:text-indigo-900 text-sm" %>
+                  <%= button_to "Delete", product_path(product), method: :delete, class: "text-red-600 hover:text-red-900 bg-transparent border-none cursor-pointer text-sm", form: { data: { turbo_confirm: "Are you sure?" } } %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Table view (visible on medium screens and up) -->
+    <div class="hidden sm:block overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inventory</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200" id="products-table-container">
+          <%= render partial: "product", collection: @products %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
