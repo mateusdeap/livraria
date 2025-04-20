@@ -10,6 +10,11 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def edit
@@ -20,7 +25,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
+        format.html { redirect_to products_url, notice: "Product was successfully created." }
         format.turbo_stream { flash.now[:notice] = "Product was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,6 +61,7 @@ class ProductsController < ApplicationController
     end
 
     def product_params
+      debugger
       params.require(:product).permit(:name, :description, :price, :category, :inventory_count)
     end
 end

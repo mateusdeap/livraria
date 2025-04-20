@@ -1,16 +1,16 @@
-<% if @product.persisted? %>
-  <%= turbo_stream.prepend "products-table-container" do %>
+<% if @product.errors.empty? %>
+  <%= turbo_stream.replace dom_id(@product) do %>
     <%= render "product", product: @product %>
   <% end %>
-  
-  <%= turbo_stream.prepend "products-mobile-container" do %>
+
+  <%= turbo_stream.replace "#{dom_id(@product)}_mobile" do %>
     <%= render "product_mobile", product: @product %>
   <% end %>
   
-  <%= turbo_stream.update "new_product", "" %>
+  <%= turbo_stream.update "edit_#{dom_id(@product)}", "" %>
   <%= turbo_stream.append "flash", partial: "layouts/flash", locals: { notice: flash.now[:notice], alert: flash.now[:alert] } %>
 <% else %>
-  <%= turbo_stream.update "new_product" do %>
+  <%= turbo_stream.update "edit_#{dom_id(@product)}" do %>
     <%= render "form", product: @product %>
   <% end %>
 <% end %>

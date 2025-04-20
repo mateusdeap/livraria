@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "#{dom_id(product)}_mobile" do %>
+  <div class="bg-white shadow rounded-lg overflow-hidden mb-4">
+    <div class="p-4">
+      <h3 class="text-lg font-medium text-gray-900 mb-2">
+        <%= link_to product.name, product_path(product), class: "text-indigo-600 hover:text-indigo-900" %>
+      </h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <div class="text-gray-500">Category:</div>
+        <div><%= product.category %></div>
+        
+        <div class="text-gray-500">Price:</div>
+        <div><%= number_to_currency(product.price) %></div>
+        
+        <div class="text-gray-500">In Stock:</div>
+        <div><%= product.inventory_count %></div>
+      </div>
+      <div class="mt-4 flex justify-between">
+        <%= link_to "Edit", edit_product_path(product), class: "text-indigo-600 hover:text-indigo-900 text-sm" %>
+        <%= button_to "Delete", product_path(product), method: :delete, class: "text-red-600 hover:text-red-900 bg-transparent border-none cursor-pointer text-sm", form: { data: { turbo_confirm: "Are you sure?" } } %>
+      </div>
+    </div>
+  </div>
+<% end %>

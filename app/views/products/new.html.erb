@@ -3,9 +3,9 @@
     <h1 class="text-xl sm:text-2xl font-bold">New Product</h1>
   </div>
 
-  <%= turbo_frame_tag "new_product" do %>
+  <div id="new_product">
     <%= render "form", product: @product %>
-  <% end %>
+  </div>
 
   <div class="mt-4">
     <%= link_to "Back to products", products_path, class: "text-indigo-600 hover:text-indigo-900 text-sm" %>
